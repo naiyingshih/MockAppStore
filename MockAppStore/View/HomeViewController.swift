@@ -10,7 +10,9 @@ import UIKit
 class HomeViewController: UIViewController {
     
     lazy var collectionView = UICollectionView()
-    var dataSource: UICollectionViewDiffableDataSource<Int, Int>!
+    
+    var appData: [AppData] = []
+    var dataSource: UICollectionViewDiffableDataSource<AppData, AppInfo>!
     
     // 初始化 compositional layout
     lazy var collectionViewLayout: UICollectionViewLayout = {
@@ -37,14 +39,16 @@ class HomeViewController: UIViewController {
         super.viewDidLoad()
         self.collectionView = UICollectionView(frame: view.bounds, collectionViewLayout: collectionViewLayout)
         collectionView.backgroundColor = .gray
-        createSnapshot()
         createDataSource()
+        collectionView.dataSource = dataSource
     }
     
-    func createSnapshot() {
-        var snapshot = NSDiffableDataSourceSnapshot<Int, Int>()
-        snapshot.appendSections([0])
-        snapshot.appendItems(Array(0...14))
+    func updateDataSource() {
+        var snapshot = NSDiffableDataSourceSnapshot<AppData, AppInfo>()
+        appData.forEach { appData in
+            snapshot.appendSections([appData])
+            snapshot.appendItems(appData.applications)
+        }
         dataSource.apply(snapshot, animatingDifferences: false)
     }
     
@@ -54,6 +58,7 @@ class HomeViewController: UIViewController {
             
             return cell
         })
+        updateDataSource()
     }
 
 }
