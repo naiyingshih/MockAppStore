@@ -8,7 +8,8 @@
 import Foundation
 
 struct AppDataModel: Codable, Hashable {
-    let appData: [AppData]
+    let freeApplications: AppData
+    let paidApplications: AppData
 }
 
 struct AppData: Codable, Hashable {

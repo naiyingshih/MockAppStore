@@ -4,12 +4,13 @@
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22504"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="gTV-IL-0wX" customClass="AppCollectionViewCell" customModule="MockAppStore" customModuleProvider="target">
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="AppCollectionViewCell" id="gTV-IL-0wX" customClass="AppCollectionViewCell" customModule="MockAppStore" customModuleProvider="target">
             <rect key="frame" x="0.0" y="0.0" width="346" height="100"/>
             <autoresizingMask key="autoresizingMask"/>
             <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
@@ -29,35 +30,36 @@
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0wn-CD-sWQ">
-                        <rect key="frame" x="152" y="15" width="42" height="21"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0wn-CD-sWQ">
+                        <rect key="frame" x="152" y="14.999999999999998" width="117.66666666666669" height="20.333333333333329"/>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TEo-bw-VIp">
-                        <rect key="frame" x="152" y="51" width="42" height="21"/>
-                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                        <nil key="textColor"/>
+                        <rect key="frame" x="152" y="43.333333333333336" width="39.666666666666657" height="19.333333333333336"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                        <color key="textColor" systemColor="systemGrayColor"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qCd-3R-id2">
-                        <rect key="frame" x="251" y="24" width="75" height="35"/>
+                    <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" horizontalCompressionResistancePriority="1000" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qCd-3R-id2">
+                        <rect key="frame" x="279.66666666666669" y="24" width="56.333333333333314" height="35"/>
                         <state key="normal" title="Button"/>
-                        <buttonConfiguration key="configuration" style="gray" title="Button"/>
+                        <buttonConfiguration key="configuration" style="gray" title="GET" cornerStyle="capsule"/>
                     </button>
                 </subviews>
             </view>
             <viewLayoutGuide key="safeArea" id="ZTg-uK-7eu"/>
             <constraints>
                 <constraint firstItem="SVg-FE-Z9b" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="10" id="65F-jc-VDn"/>
-                <constraint firstAttribute="trailing" secondItem="qCd-3R-id2" secondAttribute="trailing" constant="20" id="FNI-kV-ojH"/>
+                <constraint firstAttribute="trailing" secondItem="qCd-3R-id2" secondAttribute="trailing" constant="10" id="FNI-kV-ojH"/>
                 <constraint firstItem="0wn-CD-sWQ" firstAttribute="leading" secondItem="bOh-7x-MXf" secondAttribute="trailing" constant="10" id="LZE-8y-xVb"/>
-                <constraint firstItem="TEo-bw-VIp" firstAttribute="top" secondItem="0wn-CD-sWQ" secondAttribute="bottom" constant="15" id="OlL-EY-njP"/>
+                <constraint firstItem="TEo-bw-VIp" firstAttribute="top" secondItem="0wn-CD-sWQ" secondAttribute="bottom" constant="8" id="OlL-EY-njP"/>
                 <constraint firstItem="qCd-3R-id2" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="24" id="T57-kR-H73"/>
                 <constraint firstItem="0wn-CD-sWQ" firstAttribute="top" secondItem="bOh-7x-MXf" secondAttribute="top" id="U9t-BA-WhM"/>
                 <constraint firstItem="TEo-bw-VIp" firstAttribute="leading" secondItem="0wn-CD-sWQ" secondAttribute="leading" id="ZGI-r2-rdv"/>
                 <constraint firstItem="bOh-7x-MXf" firstAttribute="leading" secondItem="SVg-FE-Z9b" secondAttribute="trailing" constant="10" id="dJA-Mg-BIP"/>
+                <constraint firstItem="qCd-3R-id2" firstAttribute="leading" secondItem="0wn-CD-sWQ" secondAttribute="trailing" constant="10" id="eQe-Ee-PH0"/>
                 <constraint firstItem="bOh-7x-MXf" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="15" id="evo-5b-8jm"/>
                 <constraint firstAttribute="bottom" secondItem="SVg-FE-Z9b" secondAttribute="bottom" constant="10" id="ja9-iJ-KiM"/>
                 <constraint firstItem="SVg-FE-Z9b" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="10" id="sll-PU-j1Q"/>
@@ -70,7 +72,12 @@
                 <outlet property="getButton" destination="qCd-3R-id2" id="TDA-EV-qBN"/>
                 <outlet property="rankLabel" destination="bOh-7x-MXf" id="tHR-w6-3YR"/>
             </connections>
-            <point key="canvasLocation" x="251.90839694656486" y="43.309859154929576"/>
+            <point key="canvasLocation" x="251.90839694656486" y="42.95774647887324"/>
         </collectionViewCell>
     </objects>
+    <resources>
+        <systemColor name="systemGrayColor">
+            <color red="0.55686274509803924" green="0.55686274509803924" blue="0.57647058823529407" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+    </resources>
 </document>

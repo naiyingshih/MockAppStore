@@ -17,6 +17,20 @@ class AppCollectionViewCell: UICollectionViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
+        setupUI()
+    }
+
+    func setupUI() {
+        appIconImageView.layer.cornerRadius = 10
+        appIconImageView.layer.borderWidth = 1
+        appIconImageView.layer.borderColor = UIColor.lightGray.cgColor
+        appIconImageView.contentMode = .scaleAspectFill
+    }
+    
+    func configureCell(_ result: AppInfo) {
+        appNameLabel.text = result.trackName
+        classifyLabel.text = result.primaryGenreName
+        appIconImageView.loadImage(result.artworkUrl100)
     }
 
 }
