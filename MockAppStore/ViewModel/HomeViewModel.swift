@@ -9,19 +9,17 @@ import Foundation
 
 class HomeViewModel {
     
-    var appData: [AppDataModel] = []
-    
-    func fetchData() {
+    func fetchData() -> AppDataModel? {
         if let url = Bundle.main.url(forResource: "Applications", withExtension: "plist") {
             do {
                 let data = try Data(contentsOf: url)
                 let appData: AppDataModel = try Decoder.shared.decode(AppDataModel.self, from: data)
-                print(appData)
-                self.appData.append(appData)
+                return appData
             } catch {
                 print("Failed to decode plist: \(error)")
             }
         }
+        return nil
     }
     
 }

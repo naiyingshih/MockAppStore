@@ -9,45 +9,32 @@ import UIKit
 
 class HomeViewController: UIViewController {
     
+    enum Section: Hashable {
+        case freeApplications(AppData)
+        case paidApplications(AppData)
+    }
+
+    struct Item: Hashable {
+        let appInfo: AppInfo
+        let id = UUID()
+    }
+    
     let viewModel = HomeViewModel()
     
     var collectionView: UICollectionView!
-    
-    var dataSource: UICollectionViewDiffableDataSource<AppDataModel, AppInfo>!
-    
-    // 初始化 compositional layout
-    var collectionViewLayout: UICollectionViewLayout = {
-        let itemSize = NSCollectionLayoutSize(widthDimension: .absolute(330),
-                                              heightDimension: .absolute(100))
-        let item = NSCollectionLayoutItem(layoutSize: itemSize)
-
-        let groupSize = NSCollectionLayoutSize(widthDimension: .absolute(330),
-                                               heightDimension: .absolute(316))
-        let group = NSCollectionLayoutGroup.vertical(layoutSize: groupSize,
-                                                       subitems: [item, item, item])
-        group.interItemSpacing = .fixed(8)
-        group.edgeSpacing = NSCollectionLayoutEdgeSpacing(leading: nil, top: nil, trailing: .fixed(10), bottom: nil)
-
-        let section = NSCollectionLayoutSection(group: group)
-        section.orthogonalScrollingBehavior = .continuousGroupLeadingBoundary
-        section.contentInsets = NSDirectionalEdgeInsets(top: 5, leading: 5, bottom: 5, trailing: 5)
-
-        let layout = UICollectionViewCompositionalLayout(section: section)
-        return layout
-    }()
+    var dataSource: UICollectionViewDiffableDataSource<Section, Item>!
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        viewModel.fetchData()
-        collectionView = UICollectionView(frame: .zero, collectionViewLayout: collectionViewLayout)
-//        collectionView.backgroundColor = .clear
-        collectionView.register(UINib(nibName: "AppCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "AppCollectionViewCell")
-        createDataSource()
-        collectionView.dataSource = dataSource
         setupCollectionView()
+        createDataSource()
     }
     
+// MARK: - set up CollectionView layout
     func setupCollectionView() {
+        collectionView = UICollectionView(frame: .zero, collectionViewLayout: createLayout())
+        collectionView.register(UINib(nibName: "AppCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "AppCollectionViewCell")
+        collectionView.register(AppSectionHeaderView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: AppSectionHeaderView.reuseIdentifier)
         self.view.addSubview(collectionView)
         
         collectionView.translatesAutoresizingMaskIntoConstraints = false
@@ -59,24 +46,79 @@ class HomeViewController: UIViewController {
         ])
     }
     
+    func createLayout() -> UICollectionViewLayout {
+        let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1),
+                                              heightDimension: .absolute(100))
+        let item = NSCollectionLayoutItem(layoutSize: itemSize)
+        
+        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.92),
+                                               heightDimension: .absolute(316))
+        let group = NSCollectionLayoutGroup.vertical(layoutSize: groupSize,
+                                                     subitems: [item, item, item])
+        group.interItemSpacing = .fixed(8)
+        
+        // 設定 header 的大小
+        let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .absolute(44))
+
+        let sectionHeader = NSCollectionLayoutBoundarySupplementaryItem(
+                    layoutSize: headerSize,
+                    elementKind: UICollectionView.elementKindSectionHeader,
+                    alignment: .top)
+        
+        let section = NSCollectionLayoutSection(group: group)
+        section.orthogonalScrollingBehavior = .groupPaging
+        section.contentInsets = NSDirectionalEdgeInsets(top: 5, leading: 5, bottom: 5, trailing: 5)
+        section.boundarySupplementaryItems = [sectionHeader]
+        
+        let layout = UICollectionViewCompositionalLayout(section: section)
+        return layout
+    }
+    
+// MARK: - set up CollectionView data source
+    
     func updateDataSource() {
-        var snapshot = NSDiffableDataSourceSnapshot<AppDataModel, AppInfo>()
-        viewModel.appData.forEach { appDataModel in
-            snapshot.appendSections([appDataModel])
-            snapshot.appendItems(appDataModel.freeApplications.applications)
-//            snapshot.appendItems(appDataModel.paidApplications.applications)
-        }
-        dataSource.apply(snapshot, animatingDifferences: false)
+        guard let appDataModel = viewModel.fetchData() else { return }
+        var snapshot = NSDiffableDataSourceSnapshot<Section, Item>()
+        // Add sections
+        snapshot.appendSections([
+            .freeApplications(appDataModel.freeApplications),
+            .paidApplications(appDataModel.paidApplications)
+        ])
+        
+        // Add items for each section
+        let freeApplicationItems = appDataModel.freeApplications.applications.map { Item(appInfo: $0) }
+        let paidApplicationItems = appDataModel.paidApplications.applications.map { Item(appInfo: $0) }
+        
+        snapshot.appendItems(freeApplicationItems, toSection: .freeApplications(appDataModel.freeApplications))
+        snapshot.appendItems(paidApplicationItems, toSection: .paidApplications(appDataModel.paidApplications))
+        
+        dataSource.apply(snapshot, animatingDifferences: true)
     }
     
     func createDataSource() {
         dataSource = UICollectionViewDiffableDataSource(collectionView: collectionView, cellProvider: { collectionView, indexPath, itemIdentifier in
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "\(AppCollectionViewCell.self)", for: indexPath) as! AppCollectionViewCell
-            let appInfo = self.viewModel.appData[indexPath.section].freeApplications.applications[indexPath.item]
-            cell.configureCell(appInfo)
+            cell.configureCell(itemIdentifier.appInfo)
             cell.rankLabel.text = "\(indexPath.item + 1)"
             return cell
         })
+        
+        dataSource.supplementaryViewProvider = { (collectionView, kind, indexPath) in
+            if kind == UICollectionView.elementKindSectionHeader {
+                let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: AppSectionHeaderView.reuseIdentifier, for: indexPath) as! AppSectionHeaderView
+                let section = self.dataSource.snapshot().sectionIdentifiers[indexPath.section]
+                let title: String
+                switch section {
+                case .freeApplications(let appData):
+                    title = appData.title
+                case .paidApplications(let appData):
+                    title = appData.title
+                }
+                headerView.configure(with: title)
+                return headerView
+            }
+            return nil
+        }
         updateDataSource()
     }
 

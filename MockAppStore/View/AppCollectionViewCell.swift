@@ -31,6 +31,11 @@ class AppCollectionViewCell: UICollectionViewCell {
         appNameLabel.text = result.trackName
         classifyLabel.text = result.primaryGenreName
         appIconImageView.loadImage(result.artworkUrl100)
+        if result.formattedPrice == "Free" {
+            getButton.setTitle("GET", for: .normal)
+        } else {
+            getButton.setTitle(result.formattedPrice, for: .normal)
+        }
     }
 
 }

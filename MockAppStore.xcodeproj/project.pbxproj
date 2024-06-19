@@ -20,6 +20,8 @@
 		0EB1B93B2C21D04800B1D046 /* Decoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EB1B93A2C21D04800B1D046 /* Decoder.swift */; };
 		0EB1B93D2C22B60700B1D046 /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EB1B93C2C22B60700B1D046 /* HomeViewModel.swift */; };
 		0EB1B93F2C22D43800B1D046 /* ThirdPartyWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EB1B93E2C22D43800B1D046 /* ThirdPartyWrapper.swift */; };
+		0EB1B9412C231B8E00B1D046 /* AppSectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EB1B9402C231B8E00B1D046 /* AppSectionHeaderView.swift */; };
+		0EB1B9442C23265700B1D046 /* UIView+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EB1B9432C23265700B1D046 /* UIView+Ext.swift */; };
 		3CB694E94C6DFB2B3617FFAB /* Pods_MockAppStore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 730E4A5D2CB4E7A780CF1C76 /* Pods_MockAppStore.framework */; };
 /* End PBXBuildFile section */
 
@@ -39,6 +41,8 @@
 		0EB1B93A2C21D04800B1D046 /* Decoder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Decoder.swift; sourceTree = "<group>"; };
 		0EB1B93C2C22B60700B1D046 /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
 		0EB1B93E2C22D43800B1D046 /* ThirdPartyWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThirdPartyWrapper.swift; sourceTree = "<group>"; };
+		0EB1B9402C231B8E00B1D046 /* AppSectionHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSectionHeaderView.swift; sourceTree = "<group>"; };
+		0EB1B9432C23265700B1D046 /* UIView+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Ext.swift"; sourceTree = "<group>"; };
 		47AFA0499D23063577914180 /* Pods-MockAppStore.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MockAppStore.release.xcconfig"; path = "Target Support Files/Pods-MockAppStore/Pods-MockAppStore.release.xcconfig"; sourceTree = "<group>"; };
 		730E4A5D2CB4E7A780CF1C76 /* Pods_MockAppStore.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MockAppStore.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A17D50CB73CA0526F4542738 /* Pods-MockAppStore.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MockAppStore.debug.xcconfig"; path = "Target Support Files/Pods-MockAppStore/Pods-MockAppStore.debug.xcconfig"; sourceTree = "<group>"; };
@@ -83,6 +87,7 @@
 				0EB1B9382C21D02E00B1D046 /* ViewModel */,
 				0EB1B9362C21CFF300B1D046 /* View */,
 				0EB1B9372C21D01200B1D046 /* Model */,
+				0EB1B9422C23263C00B1D046 /* Extension */,
 				0EB1B91E2C219E9400B1D046 /* Main.storyboard */,
 				0EB1B9212C219E9500B1D046 /* Assets.xcassets */,
 				0EB1B9232C219E9500B1D046 /* LaunchScreen.storyboard */,
@@ -98,6 +103,7 @@
 				0EB1B91C2C219E9400B1D046 /* HomeViewController.swift */,
 				0EB1B9302C21C7FB00B1D046 /* AppCollectionViewCell.swift */,
 				0EB1B9312C21C7FB00B1D046 /* AppCollectionViewCell.xib */,
+				0EB1B9402C231B8E00B1D046 /* AppSectionHeaderView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -125,6 +131,14 @@
 				0EB1B93A2C21D04800B1D046 /* Decoder.swift */,
 			);
 			path = Helper;
+			sourceTree = "<group>";
+		};
+		0EB1B9422C23263C00B1D046 /* Extension */ = {
+			isa = PBXGroup;
+			children = (
+				0EB1B9432C23265700B1D046 /* UIView+Ext.swift */,
+			);
+			path = Extension;
 			sourceTree = "<group>";
 		};
 		31F8BD147AEC7B2970992703 /* Pods */ = {
@@ -262,11 +276,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				0EB1B91D2C219E9400B1D046 /* HomeViewController.swift in Sources */,
+				0EB1B9442C23265700B1D046 /* UIView+Ext.swift in Sources */,
 				0EB1B93B2C21D04800B1D046 /* Decoder.swift in Sources */,
 				0EB1B93D2C22B60700B1D046 /* HomeViewModel.swift in Sources */,
 				0EB1B9192C219E9400B1D046 /* AppDelegate.swift in Sources */,
 				0EB1B9322C21C7FB00B1D046 /* AppCollectionViewCell.swift in Sources */,
 				0EB1B91B2C219E9400B1D046 /* SceneDelegate.swift in Sources */,
+				0EB1B9412C231B8E00B1D046 /* AppSectionHeaderView.swift in Sources */,
 				0EB1B93F2C22D43800B1D046 /* ThirdPartyWrapper.swift in Sources */,
 				0EB1B9352C21CBC600B1D046 /* AppDataModel.swift in Sources */,
 			);
