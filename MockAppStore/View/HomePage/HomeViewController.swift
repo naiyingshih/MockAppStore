@@ -28,6 +28,7 @@ class HomeViewController: UIViewController {
         super.viewDidLoad()
         setupCollectionView()
         createDataSource()
+        collectionView.delegate = self
     }
     
 // MARK: - set up CollectionView layout
@@ -41,8 +42,8 @@ class HomeViewController: UIViewController {
         NSLayoutConstraint.activate([
             collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10),
             collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -10),
-            collectionView.topAnchor.constraint(equalTo: view.topAnchor, constant: 10),
-            collectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -10)
+            collectionView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 10),
+            collectionView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -10)
         ])
     }
     
@@ -55,10 +56,10 @@ class HomeViewController: UIViewController {
                                                heightDimension: .absolute(316))
         let group = NSCollectionLayoutGroup.vertical(layoutSize: groupSize,
                                                      subitems: [item, item, item])
-        group.interItemSpacing = .fixed(8)
+        group.interItemSpacing = .fixed(4)
         
         // 設定 header 的大小
-        let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .absolute(44))
+        let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .absolute(40))
 
         let sectionHeader = NSCollectionLayoutBoundarySupplementaryItem(
                     layoutSize: headerSize,
@@ -124,5 +125,13 @@ class HomeViewController: UIViewController {
 
 }
 
+// MARK: - Extension: UICollectionViewDelegate
 
-
+extension HomeViewController: UICollectionViewDelegate {
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let detailView = DetailViewController()
+        self.navigationController?.pushViewController(detailView, animated: true)
+    }
+    
+}
