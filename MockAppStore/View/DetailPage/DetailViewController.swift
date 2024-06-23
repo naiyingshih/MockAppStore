@@ -9,13 +9,25 @@ import UIKit
 
 class DetailViewController: UIViewController {
     
+    enum Section: Int, CaseIterable {
+        case banner
+        case detail
+        case version
+        case preview
+    }
+    
     var collectionView: UICollectionView!
+    var dataSource: UICollectionViewDiffableDataSource<Section, AnyHashable>!
+    
+    var appInfo: AppInfo?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
         setupCollectionView()
     }
+    
+    // MARK: - Layout
     
     func setupCollectionView() {
         collectionView = UICollectionView(frame: .zero, collectionViewLayout: createLayout())
@@ -37,17 +49,17 @@ class DetailViewController: UIViewController {
     
     func createLayout() -> UICollectionViewLayout {
         let layout = UICollectionViewCompositionalLayout { sectionIndex, enviroment in
-                    switch sectionIndex {
-                    case 0:
-                        return self.bannerCellSection()
-                    case 1:
-                        return self.detailInfoCellSection()
-                    case 2:
-                        return self.versionCellSection()
-                    default:
-                        return self.preViewCellSection()
-                    }
-                }
+            switch sectionIndex {
+            case 0:
+                return self.bannerCellSection()
+            case 1:
+                return self.detailInfoCellSection()
+            case 2:
+                return self.versionCellSection()
+            default:
+                return self.preViewCellSection()
+            }
+        }
         return layout
     }
     
@@ -107,6 +119,54 @@ class DetailViewController: UIViewController {
         return section
     }
     
+    // MARK: - Data Source
+    func updateDataSource(for appInfo: AppInfo) {
+        var snapshot = NSDiffableDataSourceSnapshot<Section, AnyHashable>()
+        // Add sections
+        snapshot.appendSections(Section.allCases)
+        
+        // Add items for each section
+        snapshot.appendItems([appInfo], toSection: .banner)
+        snapshot.appendItems([appInfo], toSection: .detail)
+        snapshot.appendItems([appInfo], toSection: .version)
+        snapshot.appendItems([appInfo], toSection: .preview)
+        
+        dataSource.apply(snapshot, animatingDifferences: true)
+    }
     
-    
+    func createDataSource() {
+        dataSource = UICollectionViewDiffableDataSource(collectionView: collectionView) { collectionView, indexPath, itemIdentifier in
+            
+            guard let section = Section(rawValue: indexPath.section),
+                  let appInfo = self.appInfo else { return UICollectionViewCell() }
+            self.updateDataSource(for: appInfo)
+            
+            switch section {
+            case .banner:
+                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "BannerCell", for: indexPath) as! BannerCell
+                if let appInfo = itemIdentifier as? AppInfo {
+                    //                    cell.configureCell(appInfo)
+                }
+                return cell
+            case .detail:
+                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "DetailInfoCell", for: indexPath) as! DetailInfoCell
+                if let appInfo = itemIdentifier as? AppInfo {
+                    //                    cell.configureCell(appInfo)
+                }
+                return cell
+            case .version:
+                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "RatingsCell", for: indexPath) as! VersionCell
+                if let appInfo = itemIdentifier as? AppInfo {
+                    //                    cell.configureCell(appInfo)
+                }
+                return cell
+            case .preview:
+                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "OtherInfoCell", for: indexPath) as! PreViewCell
+                if let appInfo = itemIdentifier as? AppInfo {
+                    //                    cell.configureCell(appInfo)
+                }
+                return cell
+            }
+        }
+    }
 }
