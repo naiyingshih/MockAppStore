@@ -62,6 +62,11 @@
                 <constraint firstItem="9CJ-Dw-Cf6" firstAttribute="trailing" secondItem="rBf-9D-wwM" secondAttribute="trailing" id="uba-V2-lvF"/>
             </constraints>
             <size key="customSize" width="535" height="189"/>
+            <connections>
+                <outlet property="dateLable" destination="rBf-9D-wwM" id="kEE-Qp-EOl"/>
+                <outlet property="descriptionLabel" destination="1L5-DL-on7" id="X1y-hI-Mfz"/>
+                <outlet property="versionLabel" destination="4Cq-Bf-G9a" id="LU2-E2-f6N"/>
+            </connections>
             <point key="canvasLocation" x="304.58015267175574" y="68.309859154929583"/>
         </collectionViewCell>
     </objects>

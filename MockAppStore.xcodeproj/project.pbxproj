@@ -174,9 +174,9 @@
 				0EB1B94D2C234CA100B1D046 /* DetailInfoCell.swift */,
 				0EB1B9512C234CC500B1D046 /* VersionCell.swift */,
 				0EB1B9552C234CE000B1D046 /* PreViewCell.swift */,
-				0EB1B9522C234CC500B1D046 /* VersionCell.xib */,
-				0EB1B94E2C234CA100B1D046 /* DetailInfoCell.xib */,
 				0EB1B94A2C234C4E00B1D046 /* BannerCell.xib */,
+				0EB1B94E2C234CA100B1D046 /* DetailInfoCell.xib */,
+				0EB1B9522C234CC500B1D046 /* VersionCell.xib */,
 			);
 			path = DetailPage;
 			sourceTree = "<group>";

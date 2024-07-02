@@ -130,7 +130,6 @@ class HomeViewController: UIViewController {
 extension HomeViewController: UICollectionViewDelegate {
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let detailView = DetailViewController()
         if let cell = collectionView.cellForItem(at: indexPath), let appInfo = viewModel.appInfo {
             let app: AppInfo
             if indexPath.section == 0 {
@@ -138,7 +137,7 @@ extension HomeViewController: UICollectionViewDelegate {
             } else {
                 app = appInfo.paidApplications.applications[indexPath.item]
             }
-            detailView.appInfo = app
+            let detailView = DetailViewController(appInfo: app)
             self.navigationController?.pushViewController(detailView, animated: true)
         }
     }

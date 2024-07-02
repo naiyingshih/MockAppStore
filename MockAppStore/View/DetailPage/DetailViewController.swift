@@ -10,7 +10,7 @@ import UIKit
 class DetailViewController: UIViewController {
     
     enum Section: Int, CaseIterable {
-        case banner
+        case banner = 0
         case detail
         case version
         case preview
@@ -19,25 +19,35 @@ class DetailViewController: UIViewController {
     var collectionView: UICollectionView!
     var dataSource: UICollectionViewDiffableDataSource<Section, AnyHashable>!
     
-    var appInfo: AppInfo?
+    var appInfo: AppInfo
+    
+    init(appInfo: AppInfo) {
+        self.appInfo = appInfo
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
         setupCollectionView()
+        createDataSource()
     }
     
     // MARK: - Layout
     
     func setupCollectionView() {
-        collectionView = UICollectionView(frame: .zero, collectionViewLayout: createLayout())
+        let layout = createLayout()
+        collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.register(UINib(nibName: "BannerCell", bundle: nil), forCellWithReuseIdentifier: "BannerCell")
         collectionView.register(UINib(nibName: "DetailInfoCell", bundle: nil), forCellWithReuseIdentifier: "DetailInfoCell")
         collectionView.register(UINib(nibName: "VersionCell", bundle: nil), forCellWithReuseIdentifier: "VersionCell")
         collectionView.register(PreViewCell.self, forCellWithReuseIdentifier: PreViewCell.reuseIdentifier)
-        
         self.view.addSubview(collectionView)
-        
+     
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10),
@@ -48,7 +58,7 @@ class DetailViewController: UIViewController {
     }
     
     func createLayout() -> UICollectionViewLayout {
-        let layout = UICollectionViewCompositionalLayout { sectionIndex, enviroment in
+        let layout = UICollectionViewCompositionalLayout { sectionIndex, _ in
             switch sectionIndex {
             case 0:
                 return self.bannerCellSection()
@@ -62,7 +72,7 @@ class DetailViewController: UIViewController {
         }
         return layout
     }
-    
+
     func bannerCellSection()-> NSCollectionLayoutSection {
         let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(1))
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
@@ -137,15 +147,14 @@ class DetailViewController: UIViewController {
     func createDataSource() {
         dataSource = UICollectionViewDiffableDataSource(collectionView: collectionView) { collectionView, indexPath, itemIdentifier in
             
-            guard let section = Section(rawValue: indexPath.section),
-                  let appInfo = self.appInfo else { return UICollectionViewCell() }
-            self.updateDataSource(for: appInfo)
+            guard let section = Section(rawValue: indexPath.section) else { return UICollectionViewCell() }
+            self.updateDataSource(for: self.appInfo)
             
             switch section {
             case .banner:
                 let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "BannerCell", for: indexPath) as! BannerCell
                 if let appInfo = itemIdentifier as? AppInfo {
-                    //                    cell.configureCell(appInfo)
+                    cell.configureCell(appInfo)
                 }
                 return cell
             case .detail:
@@ -155,13 +164,13 @@ class DetailViewController: UIViewController {
                 }
                 return cell
             case .version:
-                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "RatingsCell", for: indexPath) as! VersionCell
+                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "VersionCell", for: indexPath) as! VersionCell
                 if let appInfo = itemIdentifier as? AppInfo {
                     //                    cell.configureCell(appInfo)
                 }
                 return cell
             case .preview:
-                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "OtherInfoCell", for: indexPath) as! PreViewCell
+                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "PreViewCell", for: indexPath) as! PreViewCell
                 if let appInfo = itemIdentifier as? AppInfo {
                     //                    cell.configureCell(appInfo)
                 }
