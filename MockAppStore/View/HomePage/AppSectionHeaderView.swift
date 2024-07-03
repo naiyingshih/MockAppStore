@@ -13,6 +13,15 @@ class AppSectionHeaderView: UICollectionReusableView {
     lazy var titleLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 24, weight: .bold)
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
+    lazy var versionLabel: UILabel = {
+        let label = UILabel()
+        label.font = UIFont.systemFont(ofSize: 16, weight: .regular)
+        label.textColor = .tintColor
+        label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
     
@@ -28,18 +37,23 @@ class AppSectionHeaderView: UICollectionReusableView {
     
     private func setupViews() {
         addSubview(titleLabel)
+        addSubview(versionLabel)
+        
         addTopBorder(color: .lightGray, width: 1)
-        titleLabel.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             titleLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
             titleLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
             titleLabel.topAnchor.constraint(equalTo: topAnchor, constant: 8),
-            titleLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -8)
+            titleLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -8),
+            
+            versionLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
+            versionLabel.bottomAnchor.constraint(equalTo: titleLabel.bottomAnchor)
         ])
     }
     
-    func configure(with title: String) {
+    func configure(with title: String, version: String) {
         titleLabel.text = title
+        versionLabel.text = version
     }
 }
 

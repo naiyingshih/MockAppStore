@@ -13,9 +13,10 @@ class VersionCell: UICollectionViewCell {
     @IBOutlet weak var descriptionLabel: UILabel!
     @IBOutlet weak var dateLable: UILabel!
     
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        // Initialization code
+    func configureCell(_ result: AppInfo) {
+        versionLabel.text = "版本\(result.version)"
+        descriptionLabel.text = result.releaseNotes
+        dateLable.text = result.releaseDate
     }
 
 }

@@ -36,6 +36,7 @@ class HomeViewController: UIViewController {
         collectionView = UICollectionView(frame: .zero, collectionViewLayout: createLayout())
         collectionView.register(UINib(nibName: "AppCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "AppCollectionViewCell")
         collectionView.register(AppSectionHeaderView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: AppSectionHeaderView.reuseIdentifier)
+        
         self.view.addSubview(collectionView)
         
         collectionView.translatesAutoresizingMaskIntoConstraints = false
@@ -115,7 +116,7 @@ class HomeViewController: UIViewController {
                 case .paidApplications(let appData):
                     title = appData.title
                 }
-                headerView.configure(with: title)
+                headerView.configure(with: title, version: "")
                 return headerView
             }
             return nil
@@ -137,7 +138,8 @@ extension HomeViewController: UICollectionViewDelegate {
             } else {
                 app = appInfo.paidApplications.applications[indexPath.item]
             }
-            let detailView = DetailViewController(appInfo: app)
+            let detailViewModel = DetailViewModel(appInfo: app, index: indexPath.item)
+            let detailView = DetailViewController(viewModel: detailViewModel)
             self.navigationController?.pushViewController(detailView, animated: true)
         }
     }

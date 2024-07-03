@@ -6,3 +6,9 @@
 //
 
 import Foundation
+
+struct DetailModel {
+    let topic: String
+    let content: String
+    let detail: String
+}

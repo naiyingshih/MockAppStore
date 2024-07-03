@@ -9,9 +9,15 @@ import UIKit
 
 class DetailInfoCell: UICollectionViewCell {
 
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        // Initialization code
+    @IBOutlet weak var topicLabel: UILabel!
+    @IBOutlet weak var contentLabel: UILabel!
+    @IBOutlet weak var bottomLabel: UILabel!
+    
+    
+    func configureCell(_ model: DetailModel) {
+        topicLabel.text = model.topic
+        contentLabel.text = model.content
+        bottomLabel.text = model.detail
     }
 
 }

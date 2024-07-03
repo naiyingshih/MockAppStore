@@ -17,7 +17,14 @@ class BannerCell: UICollectionViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
+        setupUI()
+    }
+    
+    func setupUI() {
+        appIconImageView.layer.cornerRadius = 10
+        appIconImageView.layer.borderWidth = 1
+        appIconImageView.layer.borderColor = UIColor.lightGray.cgColor
+        appIconImageView.contentMode = .scaleAspectFill
     }
     
     func configureCell(_ result: AppInfo) {
