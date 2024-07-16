@@ -12,9 +12,11 @@ class PreViewCell: UICollectionViewCell {
 
     lazy var previewImageView: UIImageView = {
         let image = UIImageView()
-        image.layer.cornerRadius = 10
+        image.layer.cornerRadius = 15
+        image.layer.borderWidth = 1
+        image.layer.borderColor = UIColor.lightGray.cgColor
+        image.clipsToBounds = true
         image.contentMode = .scaleAspectFill
-        image.layer.cornerRadius = 10
         image.translatesAutoresizingMaskIntoConstraints = false
         return image
     }()
@@ -31,16 +33,18 @@ class PreViewCell: UICollectionViewCell {
         setupCellUI()
     }
     
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     func setupCellUI() {
-        addSubview(previewImageView)
+        contentView.addSubview(previewImageView)
 //        addSubview(deviceLabel)
         
         NSLayoutConstraint.activate([
 //            
             previewImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
             previewImageView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
-//            previewImageView.widthAnchor.constraint(equalTo: contentView.widthAnchor, multiplier: 0.6),
-//            previewImageView.heightAnchor.constraint(equalTo: contentView.heightAnchor, multiplier: 1),
             previewImageView.topAnchor.constraint(equalTo: contentView.topAnchor),
             previewImageView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
             
@@ -51,15 +55,8 @@ class PreViewCell: UICollectionViewCell {
         ])
     }
     
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    func configureCell(_ result: AppInfo) {
-        for result in result.screenshotUrls {
-            previewImageView.loadImage(result)
-        }
-
+    func configureCell(_ result: String) {
+        previewImageView.loadImage(result)
 //        deviceLabel.text = result.supportedDevices[0]
     }
     

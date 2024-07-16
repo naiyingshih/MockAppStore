@@ -134,14 +134,15 @@ class DetailViewController: UIViewController {
         
         let section = NSCollectionLayoutSection(group: group)
         section.boundarySupplementaryItems = [sectionHeader]
+        section.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 10, bottom: 0, trailing: 15)
         return section
     }
     
     func preViewCellSection()-> NSCollectionLayoutSection {
-        let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(1))
+        let itemSize = NSCollectionLayoutSize(widthDimension: .absolute(220), heightDimension: .absolute(400))
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
         
-        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.3), heightDimension: .absolute(200))
+        let groupSize = NSCollectionLayoutSize(widthDimension: .absolute(220), heightDimension: .absolute(400))
         let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
         
         let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .absolute(40))
@@ -152,6 +153,8 @@ class DetailViewController: UIViewController {
         let section = NSCollectionLayoutSection(group: group)
         section.orthogonalScrollingBehavior = .groupPaging
         section.boundarySupplementaryItems = [sectionHeader]
+        section.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 10, bottom: 0, trailing: 15)
+        section.interGroupSpacing = 10
         return section
     }
     
@@ -173,7 +176,7 @@ class DetailViewController: UIViewController {
                 }
                 items.append(contentsOf: detailItems)
             case .preview:
-                let previewItems = viewModel.loadData(appInfo, index: viewModel.index).enumerated().map { _ in
+                let previewItems = appInfo.screenshotUrls.enumerated().map { _ in
                     return Item(section: section, appInfo: appInfo)
                 }
                 items.append(contentsOf: previewItems)
@@ -211,7 +214,8 @@ class DetailViewController: UIViewController {
                 return cell
             case .preview:
                 let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "PreViewCell", for: indexPath) as! PreViewCell
-                cell.configureCell(appInfo)
+                let image = self.viewModel.appInfo.screenshotUrls[indexPath.item]
+                cell.configureCell(image)
                 return cell
             }
         }
