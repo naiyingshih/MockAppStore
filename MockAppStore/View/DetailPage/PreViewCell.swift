@@ -26,27 +26,16 @@ class PreViewCell: UICollectionViewCell {
 //        return label
 //    }()
     
-//    lazy var stackView: UIStackView = {
-//        let stackView = UIStackView()
-//        stackView.translatesAutoresizingMaskIntoConstraints = false
-//        return stackView
-//    }()
-    
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupCellUI()
     }
     
     func setupCellUI() {
-//        addSubview(stackView)
         addSubview(previewImageView)
 //        addSubview(deviceLabel)
         
         NSLayoutConstraint.activate([
-//            stackView.topAnchor.constraint(equalTo: topicLabel.bottomAnchor, constant: 15),
-//            stackView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 15),
-//            stackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
-//            stackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
 //            
             previewImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
             previewImageView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
@@ -66,15 +55,11 @@ class PreViewCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func configureCell(_ result: String) {
-//        for result in results {
+    func configureCell(_ result: AppInfo) {
+        for result in result.screenshotUrls {
             previewImageView.loadImage(result)
-//        }
-//        stackView.arrangedSubviews.forEach { $0.removeFromSuperview() }
-//        for urlString in result.screenshotUrls {
-//            previewImageView.loadImage(urlString)
-//            stackView.addArrangedSubview(previewImageView)
-//        }
+        }
+
 //        deviceLabel.text = result.supportedDevices[0]
     }
     

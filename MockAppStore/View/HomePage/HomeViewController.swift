@@ -131,7 +131,7 @@ class HomeViewController: UIViewController {
 extension HomeViewController: UICollectionViewDelegate {
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        if let cell = collectionView.cellForItem(at: indexPath), let appInfo = viewModel.appInfo {
+        if let appInfo = viewModel.appInfo {
             let app: AppInfo
             if indexPath.section == 0 {
                 app = appInfo.freeApplications.applications[indexPath.item]

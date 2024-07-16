@@ -20,6 +20,14 @@ class DetailViewController: UIViewController {
         let id = UUID()
         let section: Section
         let appInfo: AppInfo
+        
+        static func == (lhs: Item, rhs: Item) -> Bool {
+            return lhs.id == rhs.id
+        }
+
+        func hash(into hasher: inout Hasher) {
+            hasher.combine(id)
+        }
     }
     
     var collectionView: UICollectionView!
@@ -94,30 +102,28 @@ class DetailViewController: UIViewController {
                                               , heightDimension: .fractionalHeight(1))
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
         
-        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.32)
+        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.33)
                                                , heightDimension: .estimated(100))
         let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize
                                                      , subitems: [item])
-        group.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 15)
-        
-        let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .estimated(5))
+        let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .estimated(1))
         let sectionHeader = NSCollectionLayoutBoundarySupplementaryItem(
                     layoutSize: headerSize,
                     elementKind: UICollectionView.elementKindSectionHeader,
                     alignment: .topLeading)
         
         let section = NSCollectionLayoutSection(group: group)
-        section.contentInsets = NSDirectionalEdgeInsets(top: 5, leading: 0, bottom: 10, trailing: 0)
-        section.orthogonalScrollingBehavior = .continuous
+        section.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 0, bottom: 10, trailing: 0)
+        section.orthogonalScrollingBehavior = .groupPaging
         section.boundarySupplementaryItems = [sectionHeader]
         
         return section
     }
     
     func versionCellSection()-> NSCollectionLayoutSection {
-        let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(1))
+        let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .estimated(120))
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
-        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .absolute(120))
+        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .estimated(120))
         let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
         
         let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .absolute(40))
@@ -155,13 +161,30 @@ class DetailViewController: UIViewController {
         // Add sections
         snapshot.appendSections(Section.allCases)
         
-        // Create an array of items to add to each section
-        let items = Section.allCases.map { Item(section: $0, appInfo: appInfo) }
-        
-        // Loop through all sections and add items
+        var items = [Item]()
+           
         for section in Section.allCases {
-            snapshot.appendItems(items.filter { $0.section == section }, toSection: section)
+            switch section {
+            case .banner, .version:
+                items.append(Item(section: section, appInfo: appInfo))
+            case .detail:
+                let detailItems = viewModel.loadData(appInfo, index: viewModel.index).enumerated().map { _ in
+                    return Item(section: section, appInfo: appInfo)
+                }
+                items.append(contentsOf: detailItems)
+            case .preview:
+                let previewItems = viewModel.loadData(appInfo, index: viewModel.index).enumerated().map { _ in
+                    return Item(section: section, appInfo: appInfo)
+                }
+                items.append(contentsOf: previewItems)
+            }
         }
+        
+        for section in Section.allCases {
+            let sectionItems = items.filter { $0.section == section }
+            snapshot.appendItems(sectionItems, toSection: section)
+        }
+        
         dataSource.apply(snapshot, animatingDifferences: true)
     }
     
@@ -188,8 +211,7 @@ class DetailViewController: UIViewController {
                 return cell
             case .preview:
                 let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "PreViewCell", for: indexPath) as! PreViewCell
-                let images = appInfo.screenshotUrls[indexPath.item]
-                cell.configureCell(images)
+                cell.configureCell(appInfo)
                 return cell
             }
         }
