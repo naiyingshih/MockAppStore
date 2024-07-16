@@ -21,13 +21,6 @@ class PreViewCell: UICollectionViewCell {
         return image
     }()
     
-//    lazy var deviceLabel: UILabel = {
-//        let label = UILabel()
-//        label.textColor = .lightGray
-//        label.translatesAutoresizingMaskIntoConstraints = false
-//        return label
-//    }()
-    
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupCellUI()
@@ -39,16 +32,15 @@ class PreViewCell: UICollectionViewCell {
     
     func setupCellUI() {
         contentView.addSubview(previewImageView)
-//        addSubview(deviceLabel)
+//        contentView.addSubview(deviceLabel)
         
         NSLayoutConstraint.activate([
-//            
             previewImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
             previewImageView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
             previewImageView.topAnchor.constraint(equalTo: contentView.topAnchor),
             previewImageView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
             
-//            deviceLabel.topAnchor.constraint(equalTo: stackView.bottomAnchor, constant: 15),
+//            deviceLabel.topAnchor.constraint(equalTo: previewImageView.bottomAnchor, constant: 15),
 //            deviceLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
 //            deviceLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
 //            deviceLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor)

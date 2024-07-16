@@ -21,13 +21,13 @@ class DetailViewController: UIViewController {
         let section: Section
         let appInfo: AppInfo
         
-        static func == (lhs: Item, rhs: Item) -> Bool {
-            return lhs.id == rhs.id
-        }
-
-        func hash(into hasher: inout Hasher) {
-            hasher.combine(id)
-        }
+//        static func == (lhs: Item, rhs: Item) -> Bool {
+//            return lhs.id == rhs.id
+//        }
+//
+//        func hash(into hasher: inout Hasher) {
+//            hasher.combine(id)
+//        }
     }
     
     var collectionView: UICollectionView!
@@ -60,6 +60,8 @@ class DetailViewController: UIViewController {
         collectionView.register(UINib(nibName: "VersionCell", bundle: nil), forCellWithReuseIdentifier: "VersionCell")
         collectionView.register(PreViewCell.self, forCellWithReuseIdentifier: PreViewCell.reuseIdentifier)
         collectionView.register(AppSectionHeaderView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: AppSectionHeaderView.reuseIdentifier)
+        collectionView.register(AppSectionFooterView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter, withReuseIdentifier: AppSectionFooterView.reuseIdentifier)
+
         self.view.addSubview(collectionView)
      
         collectionView.translatesAutoresizingMaskIntoConstraints = false
@@ -150,15 +152,22 @@ class DetailViewController: UIViewController {
                     layoutSize: headerSize,
                     elementKind: UICollectionView.elementKindSectionHeader,
                     alignment: .topLeading)
+        let footerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .absolute(40))
+        let sectionFooter = NSCollectionLayoutBoundarySupplementaryItem(
+            layoutSize: footerSize,
+            elementKind: UICollectionView.elementKindSectionFooter,
+            alignment: .bottom
+        )
+        
         let section = NSCollectionLayoutSection(group: group)
         section.orthogonalScrollingBehavior = .groupPaging
-        section.boundarySupplementaryItems = [sectionHeader]
+        section.boundarySupplementaryItems = [sectionHeader, sectionFooter]
         section.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 10, bottom: 0, trailing: 15)
         section.interGroupSpacing = 10
         return section
     }
     
-    // MARK: - Data Source
+    // MARK: - Data Source    
     func updateDataSource(for appInfo: AppInfo) {
         var snapshot = NSDiffableDataSourceSnapshot<Section, Item>()
         // Add sections
@@ -237,6 +246,11 @@ class DetailViewController: UIViewController {
                 }
                 headerView.configure(with: title, version: version)
                 return headerView
+            } else if kind == UICollectionView.elementKindSectionFooter {
+                let footerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: AppSectionFooterView.reuseIdentifier, for: indexPath) as! AppSectionFooterView
+                let appInfo = self.viewModel.appInfo
+                footerView.configureCell(appInfo)
+                return footerView
             }
             return nil
         }
