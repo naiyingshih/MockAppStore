@@ -31,6 +31,7 @@
 		0EB1B9542C234CC500B1D046 /* VersionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0EB1B9522C234CC500B1D046 /* VersionCell.xib */; };
 		0EB1B9562C234CE000B1D046 /* PreViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EB1B9552C234CE000B1D046 /* PreViewCell.swift */; };
 		0ED09E442C46B4B800FE16C1 /* AppSectionFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ED09E432C46B4B800FE16C1 /* AppSectionFooterView.swift */; };
+		0ED09E462C47C7AB00FE16C1 /* DateFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ED09E452C47C7AB00FE16C1 /* DateFormatter.swift */; };
 		0EE8D2C12C3520ED000F9D90 /* DetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EE8D2C02C3520ED000F9D90 /* DetailViewModel.swift */; };
 		0EE8D2C32C357FA6000F9D90 /* DetailModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EE8D2C22C357FA6000F9D90 /* DetailModel.swift */; };
 		3CB694E94C6DFB2B3617FFAB /* Pods_MockAppStore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 730E4A5D2CB4E7A780CF1C76 /* Pods_MockAppStore.framework */; };
@@ -63,6 +64,7 @@
 		0EB1B9522C234CC500B1D046 /* VersionCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = VersionCell.xib; sourceTree = "<group>"; };
 		0EB1B9552C234CE000B1D046 /* PreViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreViewCell.swift; sourceTree = "<group>"; };
 		0ED09E432C46B4B800FE16C1 /* AppSectionFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSectionFooterView.swift; sourceTree = "<group>"; };
+		0ED09E452C47C7AB00FE16C1 /* DateFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateFormatter.swift; sourceTree = "<group>"; };
 		0EE8D2C02C3520ED000F9D90 /* DetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewModel.swift; sourceTree = "<group>"; };
 		0EE8D2C22C357FA6000F9D90 /* DetailModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailModel.swift; sourceTree = "<group>"; };
 		47AFA0499D23063577914180 /* Pods-MockAppStore.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MockAppStore.release.xcconfig"; path = "Target Support Files/Pods-MockAppStore/Pods-MockAppStore.release.xcconfig"; sourceTree = "<group>"; };
@@ -151,6 +153,7 @@
 			children = (
 				0EB1B93E2C22D43800B1D046 /* ThirdPartyWrapper.swift */,
 				0EB1B93A2C21D04800B1D046 /* Decoder.swift */,
+				0ED09E452C47C7AB00FE16C1 /* DateFormatter.swift */,
 			);
 			path = Helper;
 			sourceTree = "<group>";
@@ -332,6 +335,7 @@
 				0EB1B9562C234CE000B1D046 /* PreViewCell.swift in Sources */,
 				0EB1B9442C23265700B1D046 /* UIView+Ext.swift in Sources */,
 				0EB1B93B2C21D04800B1D046 /* Decoder.swift in Sources */,
+				0ED09E462C47C7AB00FE16C1 /* DateFormatter.swift in Sources */,
 				0EB1B93D2C22B60700B1D046 /* HomeViewModel.swift in Sources */,
 				0EB1B94B2C234C4E00B1D046 /* BannerCell.swift in Sources */,
 				0EB1B94F2C234CA100B1D046 /* DetailInfoCell.swift in Sources */,

@@ -8,6 +8,8 @@
 import UIKit
 
 class VersionCell: UICollectionViewCell {
+    
+    let dateFormatter = DateFormatterManager.shared.dateFormatter
 
     @IBOutlet weak var versionLabel: UILabel!
     @IBOutlet weak var descriptionLabel: UILabel!
@@ -16,7 +18,8 @@ class VersionCell: UICollectionViewCell {
     func configureCell(_ result: AppInfo) {
         versionLabel.text = "版本\(result.version)"
         descriptionLabel.text = result.releaseNotes
-        dateLable.text = result.releaseDate
+        let releaseDateString = result.releaseDate
+        dateLable.text = DateFormatterManager.shared.formatReleaseDate(releaseDateString)
     }
 
 }
