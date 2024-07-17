@@ -38,7 +38,7 @@ class DetailViewModel {
         ]
         
         let detailArray: [DetailModel.ContentType] = [
-            .stackView([UIImageView]()),
+            .stackView,
             .text("歲"),
             .text("\(result.primaryGenreName)"),
             .text("\(result.artistName)"),

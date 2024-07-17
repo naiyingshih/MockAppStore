@@ -15,7 +15,7 @@ struct DetailModel {
     enum ContentType {
         case text(String)
         case image(UIImage)
-        case stackView([UIImageView])
+        case stackView
     }
 
 }

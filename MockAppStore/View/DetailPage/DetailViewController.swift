@@ -215,7 +215,8 @@ class DetailViewController: UIViewController {
                 let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "DetailInfoCell", for: indexPath) as! DetailInfoCell
                 let index = self.viewModel.index
                 let detailModel = self.viewModel.loadData(appInfo, index: index)[indexPath.item]
-                cell.configureCell(detailModel)
+                let numberOfStars = appInfo.averageUserRating
+                cell.configureCell(detailModel, numberOfStars: numberOfStars)
                 return cell
             case .version:
                 let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "VersionCell", for: indexPath) as! VersionCell
